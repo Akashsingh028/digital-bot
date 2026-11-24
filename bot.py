@@ -1,27 +1,26 @@
+import os
 import telebot
+import google.generativeai as genai
 
-TOKEN = "9138736075:AAERLfEl1Aa74PTt-FT9uObnt-JsqznQ6x4"
-bot = telebot.TeleBot(TOKEN)
+TELEGRAM_TOKEN = os.environ.get("9138736075:AAERLfEl1Aa74PTt-FT9uObnt-JsqznQ6x4")
+GEMINI_KEY = os.environ.get("GEMINI_KEY")
+
+genai.configure(api_key=GEMINI_KEY)
+model = genai.GenerativeModel("gemini-1.5-flash")
+bot = telebot.TeleBot(9138736075:AAERLfEl1Aa74PTt-FT9uObnt-JsqznQ6x4)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.reply_to(message, "🌍 Welcome to The Digital World!\nBy Akash\n\n/joke - Joke 😂\n/motivation - Quote 💪\n/youtube - Channel ▶️")
-
-@bot.message_handler(commands=['joke'])
-def joke(message):
-    bot.reply_to(message, "Teacher: Homework kyu nahi kiya?\nStudent: Sir Light chali gayi thi! 😂")
-
-@bot.message_handler(commands=['motivation'])
-def motivation(message):
-    bot.reply_to(message, "💪 Mehnat itni chup chap karo ki Safalta shor macha de!")
-
-@bot.message_handler(commands=['youtube'])
-def youtube(message):
-    bot.reply_to(message, "▶️ Subscribe karo: https://www.youtube.com/@thedigitalworld28")
+    bot.reply_to(message, "🤖 Namaste! Mai Digital World AI Bot hun!\nBy Akash\n\nKuch bhi pucho, mai jawab dunga!\nJaise - Shayari sunao, Padhai me madad karo, Joke sunao")
 
 @bot.message_handler(func=lambda m: True)
-def echo(message):
-    bot.reply_to(message, "Samajh nahi aaya! /start likho 😅")
+def ai_reply(message):
+    try:
+        bot.send_chat_action(message.chat.id, 'typing')
+        response = model.generate_content(message.text)
+        bot.reply_to(message, response.text)
+    except Exception as e:
+        bot.reply_to(message, "Thoda ruk jao, AI soch raha hai... Dobara try karo! 😅")
 
-print("Bot Chal Gaya!")
+print("AI Bot Chal Gaya!")
 bot.polling()
