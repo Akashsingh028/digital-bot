@@ -2,12 +2,12 @@ import os
 import telebot
 import google.generativeai as genai
 
-TELEGRAM_TOKEN = os.environ.get("9138736075:AAERLfEl1Aa74PTt-FT9uObnt-JsqznQ6x4")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 GEMINI_KEY = os.environ.get("GEMINI_KEY")
 
 genai.configure(api_key=GEMINI_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
-bot = telebot.TeleBot(9138736075:AAERLfEl1Aa74PTt-FT9uObnt-JsqznQ6x4)
+bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
 @bot.message_handler(commands=['start'])
 def start(message):
