@@ -1,6 +1,6 @@
 import telebot
 
-TOKEN = "YAHAN_APNA_TOKEN_DAALO"
+TOKEN = "9138736075:AAERLfEl1Aa74PTt-FT9uObnt-JsqznQ6x4"
 bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start'])
